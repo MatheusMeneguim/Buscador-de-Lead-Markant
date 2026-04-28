@@ -197,10 +197,11 @@ export default function App() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer style={{ borderTop: '1px solid rgba(249,249,249,0.07)', padding: '48px 32px 0' }}>
+{/* FOOTER */}
+      <footer style={{ borderTop: '1px solid rgba(249,249,249,0.07)', padding: '48px 32px 0', backgroundColor: '#2B2A29' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 40, paddingBottom: 48 }}>
 
+          {/* Coluna marca */}
           <div>
             <a href="https://markant.com.br">
               <img src="/Logo_padrao_amarelo_branco.png" alt="Markant" style={{ width: 140, height: 'auto', marginBottom: 16 }} />
@@ -209,51 +210,116 @@ export default function App() {
               Assessoria estratégica de Growth Marketing.<br />
               Pequenos passos para construir algo grande.
             </p>
-            <a href="https://wa.me/5514998435234?text=Olá%2C%20vim%20pelo%20site%20da%20Markant%20e%20quero%20falar%20com%20um%20especialista." target="_blank" rel="noopener noreferrer" style={s.btnPrimary}>
+            <a
+              href="https://wa.me/5514998435234?text=Olá%2C%20vim%20pelo%20site%20da%20Markant%20e%20quero%20falar%20com%20um%20especialista."
+              target="_blank" rel="noopener noreferrer"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 8, backgroundColor: '#D9E021', color: '#2B2A29', fontFamily: 'Space Grotesk, sans-serif', fontWeight: 700, fontSize: 13, padding: '10px 16px', borderRadius: 6, textDecoration: 'none', marginBottom: 20 }}
+            >
+              <img src="/Icone_whatsapp.png" alt="" style={{ width: 18, height: 18 }} />
               Falar com um especialista
             </a>
+            <div style={{ display: 'flex', gap: 10 }}>
+              <a href="https://www.instagram.com/markantgrowth/" target="_blank" rel="noopener noreferrer"
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 36, height: 36, borderRadius: '50%', backgroundColor: 'rgba(249,249,249,0.06)', border: '1px solid rgba(249,249,249,0.1)', transition: 'border-color 0.2s' }}
+                onMouseEnter={e => e.currentTarget.style.borderColor = '#D9E021'}
+                onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(249,249,249,0.1)'}
+              >
+                <img src="/Icone_instagram.png" alt="Instagram" style={{ width: 18, height: 18, filter: 'brightness(0) saturate(100%) invert(89%) sepia(44%) saturate(600%) hue-rotate(20deg) brightness(103%) contrast(97%)' }} />
+              </a>
+              <a href="https://www.linkedin.com/company/markantgrowth" target="_blank" rel="noopener noreferrer"
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 36, height: 36, borderRadius: '50%', backgroundColor: 'rgba(249,249,249,0.06)', border: '1px solid rgba(249,249,249,0.1)', transition: 'border-color 0.2s' }}
+                onMouseEnter={e => e.currentTarget.style.borderColor = '#D9E021'}
+                onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(249,249,249,0.1)'}
+              >
+                <img src="/Icone_linkedin.png" alt="LinkedIn" style={{ width: 18, height: 18, filter: 'brightness(0) saturate(100%) invert(89%) sepia(44%) saturate(600%) hue-rotate(20deg) brightness(103%) contrast(97%)' }} />
+              </a>
+            </div>
           </div>
 
+          {/* Navegação */}
           <div>
             <h4 style={s.footerTitle}>NAVEGAÇÃO</h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
               {footerNav.map(item => (
-                <li key={item.label}><a href={item.href} style={s.linkNav}>{item.label}</a></li>
+                <li key={item.label}>
+                  <a href={item.href} style={s.linkNav}
+                    onMouseEnter={e => e.currentTarget.style.color = '#D9E021'}
+                    onMouseLeave={e => e.currentTarget.style.color = '#5D5E5D'}
+                  >{item.label}</a>
+                </li>
               ))}
             </ul>
           </div>
 
+          {/* Serviços */}
           <div>
             <h4 style={s.footerTitle}>SERVIÇOS</h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
               {footerServicos.map(sv => (
-                <li key={sv}><a href="https://markant.com.br/servicos" style={s.linkNav}>{sv}</a></li>
+                <li key={sv}>
+                  <a href="https://markant.com.br/servicos" style={s.linkNav}
+                    onMouseEnter={e => e.currentTarget.style.color = '#D9E021'}
+                    onMouseLeave={e => e.currentTarget.style.color = '#5D5E5D'}
+                  >{sv}</a>
+                </li>
               ))}
             </ul>
           </div>
 
+          {/* Contato */}
           <div>
             <h4 style={s.footerTitle}>CONTATO</h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
-              <li><a href="mailto:markantofc@gmail.com" style={s.linkNav}>markantofc@gmail.com</a></li>
-              <li><a href="https://wa.me/5514998435234" target="_blank" rel="noopener noreferrer" style={s.linkNav}>+55 (14) 9 9843-5234</a></li>
-              <li><a href="https://maps.google.com/?q=Incubadora+Sprint-CP+Cornelio+Procopio+PR" target="_blank" rel="noopener noreferrer" style={s.linkNav}>Incubadora Sprint-CP — Cornélio Procópio, PR</a></li>
+              <li style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <img src="/Icone_email.png" alt="" style={{ width: 16, height: 16, filter: 'brightness(0) saturate(100%) invert(89%) sepia(44%) saturate(600%) hue-rotate(20deg) brightness(103%) contrast(97%)' }} />
+                <a href="mailto:markantofc@gmail.com" style={s.linkNav}
+                  onMouseEnter={e => e.currentTarget.style.color = '#D9E021'}
+                  onMouseLeave={e => e.currentTarget.style.color = '#5D5E5D'}
+                >markantofc@gmail.com</a>
+              </li>
+              <li style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <img src="/Icone_whatsapp.png" alt="" style={{ width: 16, height: 16, filter: 'brightness(0) saturate(100%) invert(89%) sepia(44%) saturate(600%) hue-rotate(20deg) brightness(103%) contrast(97%)' }} />
+                <a href="https://wa.me/5514998435234" target="_blank" rel="noopener noreferrer" style={s.linkNav}
+                  onMouseEnter={e => e.currentTarget.style.color = '#D9E021'}
+                  onMouseLeave={e => e.currentTarget.style.color = '#5D5E5D'}
+                >+55 (14) 9 9843-5234</a>
+              </li>
+              <li style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+                <img src="/Icone_localizacao.png" alt="" style={{ width: 16, height: 16, marginTop: 2, filter: 'brightness(0) saturate(100%) invert(89%) sepia(44%) saturate(600%) hue-rotate(20deg) brightness(103%) contrast(97%)' }} />
+                <a href="https://maps.google.com/?q=Incubadora+Sprint-CP+Cornelio+Procopio+PR" target="_blank" rel="noopener noreferrer" style={s.linkNav}
+                  onMouseEnter={e => e.currentTarget.style.color = '#D9E021'}
+                  onMouseLeave={e => e.currentTarget.style.color = '#5D5E5D'}
+                >
+                  Incubadora Sprint-CP —<br />Cornélio Procópio, PR
+                </a>
+              </li>
             </ul>
-            <a href="https://calendar.app.google/VhJwRPjMjvUfMiGB7" target="_blank" rel="noopener noreferrer" style={{ ...s.btnOutline, marginTop: 16 }}>
+            <a href="https://calendar.app.google/VhJwRPjMjvUfMiGB7" target="_blank" rel="noopener noreferrer"
+              style={{ ...s.btnOutline, marginTop: 16, display: 'inline-block', transition: 'border-color 0.2s, color 0.2s' }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = '#D9E021'; e.currentTarget.style.color = '#D9E021' }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(249,249,249,0.2)'; e.currentTarget.style.color = '#F9F9F9' }}
+            >
               Agendar reunião
             </a>
           </div>
 
         </div>
 
-        <div style={{ borderTop: '1px solid rgba(249,249,249,0.07)', padding: '20px 0', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
+        {/* Faixa legal */}
+        <div style={{ borderTop: '1px solid rgba(249,249,249,0.07)', padding: '20px 0', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8, maxWidth: 1280, margin: '0 auto' }}>
           <p style={{ fontFamily: 'Lexend, sans-serif', fontSize: 12, color: '#5D5E5D', margin: 0 }}>
             CNPJ: 64.988.570/0001-14 · MARKANT SOFTWARE LTDA · Fundada em 2025
           </p>
           <p style={{ fontFamily: 'Lexend, sans-serif', fontSize: 12, color: '#5D5E5D', margin: 0 }}>
             © 2025 Markant. Todos os direitos reservados. ·{' '}
-            <a href="https://markant.com.br/termos-de-uso" style={{ color: '#5D5E5D' }}>Termos de uso</a> ·{' '}
-            <a href="https://markant.com.br/politica-de-privacidade" style={{ color: '#5D5E5D' }}>Política de privacidade</a>
+            <a href="https://www.markant.com.br/termos-de-uso" style={{ color: '#5D5E5D', textDecoration: 'none' }}
+              onMouseEnter={e => e.currentTarget.style.color = '#D9E021'}
+              onMouseLeave={e => e.currentTarget.style.color = '#5D5E5D'}
+            >Termos de uso</a> ·{' '}
+            <a href="https://www.markant.com.br/politica-de-privacidade" style={{ color: '#5D5E5D', textDecoration: 'none' }}
+              onMouseEnter={e => e.currentTarget.style.color = '#D9E021'}
+              onMouseLeave={e => e.currentTarget.style.color = '#5D5E5D'}
+            >Política de privacidade</a>
           </p>
         </div>
       </footer>
