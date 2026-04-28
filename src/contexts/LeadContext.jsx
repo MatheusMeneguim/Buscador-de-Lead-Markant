@@ -2,8 +2,7 @@ import { createContext, useContext, useState } from 'react'
 
 const LeadContext = createContext(null)
 
-const USE_MOCK = true
-const ZENSERP_API_KEY = 'SUA_CHAVE_AQUI'
+const USE_MOCK = false
 
 const MOCK_DATA = [
   {
@@ -59,31 +58,14 @@ async function fetchLeads(nicho, cidade) {
     return MOCK_DATA
   }
 
-  const query = `${nicho} em ${cidade}`
-  const params = new URLSearchParams({
-    apikey: ZENSERP_API_KEY,
-    q: query,
-    tbm: 'lcl',
-    num: '20',
-  })
-
-  const response = await fetch(`https://app.zenserp.com/api/v2/search?${params}`)
+  const params = new URLSearchParams({ nicho, cidade })
+  const response = await fetch(`/api/buscar?${params}`)
 
   if (!response.ok) {
     throw new Error(`Erro na API: ${response.status}`)
   }
 
-  const data = await response.json()
-
-  return (data.local_results || []).map((item) => ({
-    title: item.title || 'Sem nome',
-    address: item.address || 'Endereço não disponível',
-    phone: item.phone || null,
-    rating: parseFloat(item.rating) || null,
-    reviews: parseInt(item.reviews) || 0,
-    website: item.website || null,
-    place_id: item.place_id || Math.random().toString(),
-  }))
+  return await response.json()
 }
 
 export function LeadProvider({ children }) {
@@ -103,7 +85,6 @@ export function LeadProvider({ children }) {
       const resultado = await fetchLeads(nicho, cidade)
       setLeads(resultado)
 
-      // Salva no histórico sem duplicatas
       setHistorico((prev) => {
         const jaExiste = prev.some(
           (h) => h.nicho === nicho && h.cidade === cidade
@@ -114,7 +95,6 @@ export function LeadProvider({ children }) {
           ...prev,
         ].slice(0, 5)
       })
-
     } catch (err) {
       setErro('Erro ao buscar leads. Tente novamente.')
     } finally {
