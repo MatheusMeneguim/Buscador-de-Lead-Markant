@@ -1,11 +1,43 @@
 import { useState } from 'react'
-import { Box, TextField, Button } from '@mui/material'
+import { Box, TextField, Button, Alert } from '@mui/material'
 
 function FormBusca() {
   const [nicho, setNicho] = useState('')
   const [cidade, setCidade] = useState('')
+  const [erros, setErros] = useState({})
+
+  function validar() {
+    const novosErros = {}
+
+    // Validação do Nicho
+    if (!nicho.trim()) {
+      novosErros.nicho = 'Informe o nicho de mercado.'
+    } else if (nicho.trim().length < 3) {
+      novosErros.nicho = 'O nicho deve ter pelo menos 3 caracteres.'
+    } else if (/^[0-9]+$/.test(nicho)) {
+      novosErros.nicho = 'O nicho não pode conter apenas números.'
+    }
+
+    // Validação da Cidade
+    if (!cidade.trim()) {
+      novosErros.cidade = 'Informe a cidade.'
+    } else if (cidade.trim().length < 3) {
+      novosErros.cidade = 'A cidade deve ter pelo menos 3 caracteres.'
+    } else if (/[0-9]/.test(cidade)) {
+      novosErros.cidade = 'A cidade não pode conter números.'
+    } else if (/[^a-zA-ZÀ-ÿ\s]/.test(cidade)) {
+      novosErros.cidade = 'A cidade não pode conter caracteres especiais.'
+    }
+
+    return novosErros
+  }
 
   function handleBuscar() {
+    const novosErros = validar()
+    setErros(novosErros)
+
+    if (Object.keys(novosErros).length > 0) return
+
     console.log('Buscando:', nicho, cidade)
   }
 
@@ -15,18 +47,30 @@ function FormBusca() {
         label="Nicho"
         placeholder="Ex: clínicas odontológicas"
         fullWidth
-        sx={{ marginBottom: 2 }}
+        sx={{ marginBottom: 1 }}
         value={nicho}
-        onChange={(e) => setNicho(e.target.value)}
+        onChange={(e) => {
+          setNicho(e.target.value)
+          setErros((prev) => ({ ...prev, nicho: '' }))
+        }}
+        error={!!erros.nicho}
+        helperText={erros.nicho}
       />
+
       <TextField
         label="Cidade"
         placeholder="Ex: Cornélio Procópio"
         fullWidth
         sx={{ marginBottom: 2 }}
         value={cidade}
-        onChange={(e) => setCidade(e.target.value)}
+        onChange={(e) => {
+          setCidade(e.target.value)
+          setErros((prev) => ({ ...prev, cidade: '' }))
+        }}
+        error={!!erros.cidade}
+        helperText={erros.cidade}
       />
+
       <Button variant="contained" onClick={handleBuscar}>
         Buscar
       </Button>
