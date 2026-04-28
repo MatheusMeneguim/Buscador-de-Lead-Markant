@@ -85,13 +85,12 @@ export default function App() {
       {/* HEADER */}
       <header style={{ position: 'sticky', top: 0, zIndex: 100, backgroundColor: 'rgba(43,42,41,0.96)', backdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(249,249,249,0.07)' }}>
         <nav style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 72, maxWidth: 1280, margin: '0 auto', padding: '0 16px', gap: 16 }}>
-          
+
           <a href="https://markant.com.br">
             <img src="/Logo_padrao_amarelo_branco.png" alt="Markant" style={{ width: 120, height: 'auto' }} />
           </a>
 
-          {/* Menu desktop */}
-          <ul style={{ display: 'flex', gap: 32, listStyle: 'none', margin: 0, padding: 0, '@media(max-width:768px)': { display: 'none' } }} className="nav-desktop">
+          <ul className="nav-desktop" style={{ display: 'flex', gap: 32, listStyle: 'none', margin: 0, padding: 0 }}>
             {navLinks.map(item => (
               <li key={item.label}>
                 <a href={item.href} style={{ color: item.active ? '#D9E021' : '#F9F9F9', textDecoration: 'none', fontFamily: 'Space Grotesk, sans-serif', fontWeight: 500, fontSize: 15 }}>
@@ -101,46 +100,68 @@ export default function App() {
             ))}
           </ul>
 
-          <a href="https://wa.me/5514998435234?text=Olá%2C%20vim%20pelo%20site%20da%20Markant%20e%20quero%20solicitar%20contato." target="_blank" rel="noopener noreferrer"
-            style={{ backgroundColor: '#D9E021', color: '#2B2A29', fontFamily: 'Space Grotesk, sans-serif', fontWeight: 700, fontSize: 13, padding: '10px 16px', borderRadius: 6, textDecoration: 'none', whiteSpace: 'nowrap' }}
-            className="nav-cta"
-          >
-            Solicitar Contato
-          </a>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <a href="https://wa.me/5514998435234?text=Olá%2C%20vim%20pelo%20site%20da%20Markant%20e%20quero%20solicitar%20contato."
+              target="_blank" rel="noopener noreferrer" className="nav-cta"
+              style={{ backgroundColor: '#D9E021', color: '#2B2A29', fontFamily: 'Space Grotesk, sans-serif', fontWeight: 700, fontSize: 13, padding: '10px 16px', borderRadius: 6, textDecoration: 'none', whiteSpace: 'nowrap' }}>
+              Solicitar Contato
+            </a>
 
-          {/* Botão hamburger */}
-          <button
-            onClick={() => setMenuAberto(!menuAberto)}
-            className="nav-toggle"
-            aria-label="Menu"
-            style={{ display: 'none', flexDirection: 'column', gap: 5, background: 'none', border: 'none', cursor: 'pointer', padding: 8 }}
-          >
-            <span style={{ display: 'block', width: 24, height: 2, backgroundColor: '#F9F9F9', transition: 'transform 0.3s', transform: menuAberto ? 'rotate(45deg) translate(5px, 5px)' : 'none' }} />
-            <span style={{ display: 'block', width: 24, height: 2, backgroundColor: '#F9F9F9', opacity: menuAberto ? 0 : 1, transition: 'opacity 0.3s' }} />
-            <span style={{ display: 'block', width: 24, height: 2, backgroundColor: '#F9F9F9', transition: 'transform 0.3s', transform: menuAberto ? 'rotate(-45deg) translate(5px, -5px)' : 'none' }} />
-          </button>
+            <button onClick={() => setMenuAberto(true)} className="nav-toggle"
+              aria-label="Abrir menu"
+              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 8, display: 'flex', flexDirection: 'column', gap: 5 }}>
+              <span style={{ display: 'block', width: 24, height: 2, backgroundColor: '#F9F9F9' }} />
+              <span style={{ display: 'block', width: 24, height: 2, backgroundColor: '#F9F9F9' }} />
+              <span style={{ display: 'block', width: 24, height: 2, backgroundColor: '#F9F9F9' }} />
+            </button>
+          </div>
         </nav>
+      </header>
 
-        {/* Menu mobile dropdown */}
-        {menuAberto && (
-          <div style={{ backgroundColor: '#2B2A29', borderTop: '1px solid rgba(249,249,249,0.07)', padding: '16px 0' }}>
+      {/* MENU MOBILE OVERLAY */}
+      {menuAberto && (
+        <div style={{
+          position: 'fixed', inset: 0, zIndex: 200,
+          backgroundColor: '#2B2A29',
+          display: 'flex', flexDirection: 'column',
+        }}>
+          {/* Topo do overlay */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 16px', height: 72, borderBottom: '1px solid rgba(249,249,249,0.07)' }}>
+            <a href="https://markant.com.br" onClick={() => setMenuAberto(false)}>
+              <img src="/Logo_padrao_amarelo_branco.png" alt="Markant" style={{ width: 120, height: 'auto' }} />
+            </a>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <a href="https://wa.me/5514998435234?text=Olá%2C%20vim%20pelo%20site%20da%20Markant%20e%20quero%20solicitar%20contato."
+                target="_blank" rel="noopener noreferrer"
+                style={{ backgroundColor: '#D9E021', color: '#2B2A29', fontFamily: 'Space Grotesk, sans-serif', fontWeight: 700, fontSize: 13, padding: '10px 16px', borderRadius: 6, textDecoration: 'none' }}>
+                Solicitar Contato
+              </a>
+              <button onClick={() => setMenuAberto(false)} aria-label="Fechar menu"
+                style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#F9F9F9', fontSize: 28, lineHeight: 1, padding: 4 }}>
+                ✕
+              </button>
+            </div>
+          </div>
+
+          {/* Links */}
+          <nav style={{ padding: '24px 0', flex: 1 }}>
             {navLinks.map(item => (
               <a key={item.label} href={item.href}
-                style={{ display: 'block', padding: '14px 24px', color: item.active ? '#D9E021' : '#F9F9F9', textDecoration: 'none', fontFamily: 'Space Grotesk, sans-serif', fontWeight: 500, fontSize: 16, borderBottom: '1px solid rgba(249,249,249,0.05)' }}
                 onClick={() => setMenuAberto(false)}
-              >
+                style={{
+                  display: 'block', padding: '20px 24px',
+                  color: item.active ? '#D9E021' : '#F9F9F9',
+                  textDecoration: 'none',
+                  fontFamily: 'Space Grotesk, sans-serif',
+                  fontWeight: 600, fontSize: 22,
+                  borderBottom: '1px solid rgba(249,249,249,0.05)',
+                }}>
                 {item.label}
               </a>
             ))}
-            <div style={{ padding: '16px 24px' }}>
-              <a href="https://wa.me/5514998435234?text=Olá%2C%20vim%20pelo%20site%20da%20Markant%20e%20quero%20solicitar%20contato." target="_blank" rel="noopener noreferrer"
-                style={{ ...s.btnPrimary, display: 'block', textAlign: 'center', fontSize: 15, padding: '12px 20px' }}>
-                Solicitar Contato
-              </a>
-            </div>
-          </div>
-        )}
-      </header>
+          </nav>
+        </div>
+      )}
 
       {/* CSS responsivo */}
       <style>{`
@@ -153,7 +174,7 @@ export default function App() {
           .nav-toggle { display: none !important; }
         }
       `}</style>
-
+      
       {/* HERO */}
       <section style={{ position: 'relative', padding: 'clamp(40px, 6vw, 60px) 0 clamp(32px, 5vw, 48px)', overflow: 'hidden', borderBottom: '1px solid rgba(249,249,249,0.07)' }}>
         <ParticleCanvas />
