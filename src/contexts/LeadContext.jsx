@@ -1,9 +1,7 @@
 import { createContext, useContext, useState } from 'react'
 
 const LeadContext = createContext(null)
-
 const USE_MOCK = false
-
 const MOCK_DATA = [
   {
     title: 'Clínica Odontológica Sorriso Perfeito',
