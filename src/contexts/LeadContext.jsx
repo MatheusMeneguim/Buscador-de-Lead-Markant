@@ -2,11 +2,6 @@ import { createContext, useContext, useState } from 'react'
 
 const LeadContext = createContext(null)
 
-// ─────────────────────────────────────────────
-// MOCK: dados falsos que simulam a resposta da Zenserp
-// Na entrega final: trocar USE_MOCK para false
-// e colocar a chave real em ZENSERP_API_KEY
-// ─────────────────────────────────────────────
 const USE_MOCK = true
 const ZENSERP_API_KEY = 'SUA_CHAVE_AQUI'
 
@@ -60,7 +55,6 @@ const MOCK_DATA = [
 
 async function fetchLeads(nicho, cidade) {
   if (USE_MOCK) {
-    // Simula o tempo de resposta de uma API real
     await new Promise((resolve) => setTimeout(resolve, 1200))
     return MOCK_DATA
   }
@@ -97,6 +91,7 @@ export function LeadProvider({ children }) {
   const [loading, setLoading] = useState(false)
   const [erro, setErro] = useState(null)
   const [buscaAtual, setBuscaAtual] = useState({ nicho: '', cidade: '' })
+  const [historico, setHistorico] = useState([])
 
   async function buscar(nicho, cidade) {
     setLoading(true)
@@ -107,6 +102,19 @@ export function LeadProvider({ children }) {
     try {
       const resultado = await fetchLeads(nicho, cidade)
       setLeads(resultado)
+
+      // Salva no histórico sem duplicatas
+      setHistorico((prev) => {
+        const jaExiste = prev.some(
+          (h) => h.nicho === nicho && h.cidade === cidade
+        )
+        if (jaExiste) return prev
+        return [
+          { nicho, cidade, total: resultado.length, data: new Date().toLocaleDateString('pt-BR') },
+          ...prev,
+        ].slice(0, 5)
+      })
+
     } catch (err) {
       setErro('Erro ao buscar leads. Tente novamente.')
     } finally {
@@ -115,7 +123,7 @@ export function LeadProvider({ children }) {
   }
 
   return (
-    <LeadContext.Provider value={{ leads, loading, erro, buscaAtual, buscar }}>
+    <LeadContext.Provider value={{ leads, loading, erro, buscaAtual, buscar, historico }}>
       {children}
     </LeadContext.Provider>
   )
