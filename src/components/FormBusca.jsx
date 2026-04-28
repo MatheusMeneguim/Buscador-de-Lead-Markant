@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Box, TextField, Button } from '@mui/material'
+import { Box, TextField, Button, Alert, CircularProgress } from '@mui/material'
 import { useLeads } from '../contexts/LeadContext'
 
 function FormBusca() {
@@ -7,7 +7,7 @@ function FormBusca() {
   const [cidade, setCidade] = useState('')
   const [erros, setErros] = useState({})
 
-  const { buscar } = useLeads()
+  const { buscar, loading, erro } = useLeads()
 
   function validar() {
     const novosErros = {}
@@ -56,6 +56,7 @@ function FormBusca() {
         }}
         error={!!erros.nicho}
         helperText={erros.nicho}
+        disabled={loading}
       />
       <TextField
         label="Cidade"
@@ -69,10 +70,24 @@ function FormBusca() {
         }}
         error={!!erros.cidade}
         helperText={erros.cidade}
+        disabled={loading}
       />
-      <Button variant="contained" onClick={handleBuscar}>
-        Buscar
+
+      <Button
+        variant="contained"
+        onClick={handleBuscar}
+        disabled={loading}
+        startIcon={loading ? <CircularProgress size={18} color="inherit" /> : null}
+      >
+        {loading ? 'Buscando...' : 'Buscar'}
       </Button>
+
+      {/* Mensagem de erro DEPOIS do envio — critério do professor */}
+      {erro && (
+        <Alert severity="error" sx={{ marginTop: 2 }}>
+          {erro}
+        </Alert>
+      )}
     </Box>
   )
 }
