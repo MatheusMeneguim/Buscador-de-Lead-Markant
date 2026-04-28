@@ -2,6 +2,96 @@ import { createContext, useContext, useState } from 'react'
 
 const LeadContext = createContext(null)
 
+// ─────────────────────────────────────────────
+// MOCK: dados falsos que simulam a resposta da Zenserp
+// Na entrega final: trocar USE_MOCK para false
+// e colocar a chave real em ZENSERP_API_KEY
+// ─────────────────────────────────────────────
+const USE_MOCK = true
+const ZENSERP_API_KEY = 'SUA_CHAVE_AQUI'
+
+const MOCK_DATA = [
+  {
+    title: 'Clínica Odontológica Sorriso Perfeito',
+    address: 'Rua XV de Novembro, 423 - Cornélio Procópio, PR',
+    phone: '(43) 3524-1100',
+    rating: 4.8,
+    reviews: 112,
+    website: 'https://sorrisoperfeito.com.br',
+    place_id: 'mock_001',
+  },
+  {
+    title: 'OdontoCenter Cornélio',
+    address: 'Av. Minas Gerais, 1250 - Cornélio Procópio, PR',
+    phone: '(43) 3524-2233',
+    rating: 4.5,
+    reviews: 87,
+    website: null,
+    place_id: 'mock_002',
+  },
+  {
+    title: 'Studio Dental Clínica Odontológica',
+    address: 'Rua Prefeito Hugo Cabral, 89 - Cornélio Procópio, PR',
+    phone: '(43) 99801-3344',
+    rating: 4.9,
+    reviews: 203,
+    website: 'https://studiodental.com',
+    place_id: 'mock_003',
+  },
+  {
+    title: 'Consultório Dra. Fernanda Lima',
+    address: 'Rua Espírito Santo, 610 - Cornélio Procópio, PR',
+    phone: '(43) 3524-9900',
+    rating: 4.2,
+    reviews: 41,
+    website: null,
+    place_id: 'mock_004',
+  },
+  {
+    title: 'Espaço Oral Odontologia Avançada',
+    address: 'Rua Amazonas, 77 - Cornélio Procópio, PR',
+    phone: '(43) 98822-5566',
+    rating: 3.9,
+    reviews: 28,
+    website: 'https://espacooral.com.br',
+    place_id: 'mock_005',
+  },
+]
+
+async function fetchLeads(nicho, cidade) {
+  if (USE_MOCK) {
+    // Simula o tempo de resposta de uma API real
+    await new Promise((resolve) => setTimeout(resolve, 1200))
+    return MOCK_DATA
+  }
+
+  const query = `${nicho} em ${cidade}`
+  const params = new URLSearchParams({
+    apikey: ZENSERP_API_KEY,
+    q: query,
+    tbm: 'lcl',
+    num: '20',
+  })
+
+  const response = await fetch(`https://app.zenserp.com/api/v2/search?${params}`)
+
+  if (!response.ok) {
+    throw new Error(`Erro na API: ${response.status}`)
+  }
+
+  const data = await response.json()
+
+  return (data.local_results || []).map((item) => ({
+    title: item.title || 'Sem nome',
+    address: item.address || 'Endereço não disponível',
+    phone: item.phone || null,
+    rating: parseFloat(item.rating) || null,
+    reviews: parseInt(item.reviews) || 0,
+    website: item.website || null,
+    place_id: item.place_id || Math.random().toString(),
+  }))
+}
+
 export function LeadProvider({ children }) {
   const [leads, setLeads] = useState([])
   const [loading, setLoading] = useState(false)
@@ -15,8 +105,8 @@ export function LeadProvider({ children }) {
     setBuscaAtual({ nicho, cidade })
 
     try {
-      console.log('Buscando na API:', nicho, cidade)
-      // Por enquanto só loga — vamos conectar a API no próximo passo
+      const resultado = await fetchLeads(nicho, cidade)
+      setLeads(resultado)
     } catch (err) {
       setErro('Erro ao buscar leads. Tente novamente.')
     } finally {
