@@ -74,7 +74,7 @@ npm run dev
 ## Autor
 
 **Matheus F. Meneguim**
-Fundador — Markant Software Ltda
+Fundador — Markant Growth Marketing
 
 Projeto desenvolvido sob orientação do
 Prof. Anderson Paulo Avila Santos — UTFPR Campus Cornélio Procópio
