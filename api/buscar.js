@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const query = `${nicho} em ${cidade} PR Brasil`
+    const query = `${nicho} em ${cidade} Brasil`
     const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(query)}&language=pt-BR&region=br&key=${process.env.GOOGLE_PLACES_API_KEY}`
 
     const response = await fetch(url)
