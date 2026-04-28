@@ -1,4 +1,4 @@
-# Local Lead Finder — [Markant growth marketing](https://markant.com.br)
+# Buscador de Leads Qualificados — [Markant Growth Marketing](https://markant.com.br)
 
 Single Page Application (SPA) desenvolvida em React.js
 para a disciplina de Programação Web Fullstack (AS64A)
@@ -11,7 +11,7 @@ via extração de dados públicos do Google Maps.
 
 ## Objetivo
 
-Facilitar a busca por prestadores de serviços e empresas em localizações específicas, servindo como ferramenta estratégica de prospecção para a [Markant growth marketing](https://markant.com.br).
+Facilitar a busca por prestadores de serviços e empresas em localizações específicas, servindo como ferramenta estratégica de prospecção para a [Markant Growth Marketing](https://markant.com.br).
 
 ---
 
@@ -72,7 +72,7 @@ npm run dev
 ## Autor
 
 **Matheus F. Meneguim**
-Fundador — [Markant growth marketing](https://markant.com.br)
+Fundador — [Markant Growth Marketing](https://markant.com.br)
 
 Projeto desenvolvido sob orientação do
 Prof. Anderson Paulo Avila Santos — UTFPR Campus Cornélio Procópio
