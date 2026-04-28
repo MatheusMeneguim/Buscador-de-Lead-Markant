@@ -1,81 +1,16 @@
-# Local Lead Finder — Markant Software
+# React + Vite
 
-Single Page Application (SPA) desenvolvida em React.js
-para a disciplina de Programação Web Fullstack (AS64A)
-da UTFPR — Campus Cornélio Procópio.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Ferramenta de prospecção inteligente de leads B2B
-via extração de dados públicos do Google Maps.
+Currently, two official plugins are available:
 
----
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## Objetivo
+## React Compiler
 
-Facilitar a busca por prestadores de serviços e empresas
-em localizações específicas, servindo como ferramenta
-estratégica de prospecção para a Markant Software Ltda.
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
----
+## Expanding the ESLint configuration
 
-## Tecnologias
-
-| Tecnologia | Uso |
-|------------|-----|
-| Vite | Build tool — estrutura moderna e rápida |
-| Zenserp API | API JSON para busca de dados locais |
-| Context API | Gerenciamento de estado global e histórico |
-| useMemo | Otimização de filtragem sem re-renderizações |
-| Material UI (MUI) | Interface profissional e responsiva |
-| Exportação CSV | Conversão de JSON para uso em CRMs |
-
----
-
-## Estrutura do Projeto
-/src
-/components   — Componentes reutilizáveis em JSX
-/contexts     — Contextos para gerenciamento de estado
-/services     — Configuração de consumo da API externa
-
----
-
-## Funcionalidades
-
-1. **Busca Parametrizada** — Pesquisa por nicho e cidade
-   com parâmetros dinâmicos para a API
-2. **Validação de Formulário** — Verificação de campos
-   obrigatórios com mensagens de erro
-3. **Tratamento de Erros** — Feedback visual para falhas
-   na API ou limite de requisições
-4. **Filtro Inteligente** — useMemo para tratamento
-   de dados em memória
-5. **Exportação CSV** — Dados validados exportados
-   em formato .csv para uso em CRM
-
----
-
-## Como rodar
-
-```bash
-# 1. Clone o repositório
-git clone [url-do-repositorio]
-
-# 2. Instale as dependências
-npm install
-
-# 3. Crie o arquivo .env na raiz
-echo "VITE_ZENSERP_API_KEY=SUA_CHAVE_AQUI" > .env
-
-# 4. Execute em modo de desenvolvimento
-npm run dev
-```
-
----
-
-## Autor
-
-**Matheus F. Meneguim**
-Fundador — Markant Growth Marketing
-
-Projeto desenvolvido sob orientação do
-Prof. Anderson Paulo Avila Santos — UTFPR Campus Cornélio Procópio
-Disciplina: Programação Web Fullstack (AS64A)
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
