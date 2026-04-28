@@ -1,15 +1,17 @@
 import { useState } from 'react'
-import { Box, TextField, Button, Alert } from '@mui/material'
+import { Box, TextField, Button } from '@mui/material'
+import { useLeads } from '../contexts/LeadContext'
 
 function FormBusca() {
   const [nicho, setNicho] = useState('')
   const [cidade, setCidade] = useState('')
   const [erros, setErros] = useState({})
 
+  const { buscar } = useLeads()
+
   function validar() {
     const novosErros = {}
 
-    // Validação do Nicho
     if (!nicho.trim()) {
       novosErros.nicho = 'Informe o nicho de mercado.'
     } else if (nicho.trim().length < 3) {
@@ -18,7 +20,6 @@ function FormBusca() {
       novosErros.nicho = 'O nicho não pode conter apenas números.'
     }
 
-    // Validação da Cidade
     if (!cidade.trim()) {
       novosErros.cidade = 'Informe a cidade.'
     } else if (cidade.trim().length < 3) {
@@ -38,7 +39,7 @@ function FormBusca() {
 
     if (Object.keys(novosErros).length > 0) return
 
-    console.log('Buscando:', nicho, cidade)
+    buscar(nicho, cidade)
   }
 
   return (
@@ -56,7 +57,6 @@ function FormBusca() {
         error={!!erros.nicho}
         helperText={erros.nicho}
       />
-
       <TextField
         label="Cidade"
         placeholder="Ex: Cornélio Procópio"
@@ -70,7 +70,6 @@ function FormBusca() {
         error={!!erros.cidade}
         helperText={erros.cidade}
       />
-
       <Button variant="contained" onClick={handleBuscar}>
         Buscar
       </Button>
