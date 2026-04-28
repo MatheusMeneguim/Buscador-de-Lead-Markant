@@ -5,21 +5,28 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Nicho e cidade são obrigatórios' })
   }
 
-  const query = `${nicho} em ${cidade} PR Brasil`
-  const params = new URLSearchParams({
-    apikey: process.env.ZENSERP_API_KEY,
-    q: query,
-    tbm: 'lcl',
-    num: '20',
-    hl: 'pt',
-    gl: 'br',
-    location: 'Parana,Brazil',
-  })
-
   try {
-    const response = await fetch(`https://app.zenserp.com/api/v2/search?${params}`)
+    const query = `${nicho} em ${cidade} PR Brasil`
+    const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(query)}&language=pt-BR&region=br&key=${process.env.GOOGLE_PLACES_API_KEY}`
+
+    const response = await fetch(url)
     const data = await response.json()
-    return res.status(200).json({ debug: data })
+
+    if (!data.results || data.results.length === 0) {
+      return res.status(200).json([])
+    }
+
+    const leads = data.results.map(item => ({
+      title: item.name || 'Sem nome',
+      address: item.formatted_address || 'Endereço não disponível',
+      phone: null,
+      rating: item.rating || null,
+      reviews: item.user_ratings_total || 0,
+      website: null,
+      place_id: item.place_id || Math.random().toString(),
+    }))
+
+    res.status(200).json(leads)
   } catch (err) {
     res.status(500).json({ error: err.message })
   }
